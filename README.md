@@ -25,15 +25,16 @@ The Initial grouping aims to reduce the complexity of distinguishing 7 classes s
 Features were Min-Max normalized in the subject level.
 
 ### 2. Deep Embeddings (For the Level 2 Classifiers)
-Differentiating nuanced emotions (e.g., Sadness vs. Boredom) requires more specialized features. To achieve this, Transfer Learning via Facebook's pre-trained `wav2vec2-large-xlsr-53` model was used which is suitable for German language. Dimentionality reduction using PCA was then used to transform **Wav2Vec2 Embeddings' 768 dimensions** to 2 dimensions, a more appropriate representation for classical ML models.  
+Differentiating nuanced emotions (e.g., Sadness vs. Boredom) requires more specialized features. To achieve this, Transfer Learning via Facebook's pre-trained `wav2vec2-large-xlsr-53` model for multilingual speech. Dimentionality reduction using PCA was then used to transform Wav2Vec2 Embeddings' 1024 dimensions to 50 dimensions, a more appropriate representation for classical ML models. 
+Both Level 2 classifiers were SVM.
   
-### Data Storage & Leakage Prevention
+### Data Storage
 All extracted features, alongside their ground-truth emotion labels, are saved as `.npy` (NumPy matrices) to ensure rapid loading during the training phase. 
 
 
 ## Train
 `train.py` performs both train and evaluation of the model.
-Train-Test split is done using a Subject-Stratified approach.
+Train-Test split is done using a Subject-Stratified approach with 5-fold cross validation.
 
 ## Test
 <img width="500" height="500" alt="true_pipeline_cm" src="https://github.com/user-attachments/assets/ed9d59b5-0fe5-41ba-a701-b5751f78b669" />
