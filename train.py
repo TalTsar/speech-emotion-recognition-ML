@@ -62,12 +62,12 @@ def main():
         gatekeeper = SVC(kernel='rbf', C=10, gamma='scale')
         gatekeeper.fit(X_mfcc_train_scaled, y_exc_train)
 
-        # 🚀 COMPRESS THE EMBEDDINGS 🚀
+        # COMPRESS THE EMBEDDINGS
         pca_emb = PCA(n_components=50, random_state=42)
         X_emb_train_pca = pca_emb.fit_transform(X_emb_train)
 
-        # 🚀 COMBINE FEATURES SAFELY 🚀
-        # Now we have ~50 acoustic features + 50 PCA W2V2 features = ~100 dense dimensions
+        # COMBINE FEATURES
+        # New feature vector size: 100 dense dimensions
         X_combined_train = np.hstack((X_mfcc_train_scaled, X_emb_train_pca))
 
         # B. Low Specialist (L2)
@@ -142,18 +142,18 @@ def main():
     # STEP 4: THE GRAND FINALE METRICS
     # ==========================================
     print("\n" + "=" * 50)
-    print("🧠 INDIVIDUAL MODEL PERFORMANCE (CV Average) 🧠")
+    print("INDIVIDUAL MODEL PERFORMANCE (CV Average)")
     print("=" * 50)
     print(f"Gatekeeper (L1) Accuracy:   {accuracy_score(all_exc_true, all_exc_pred) * 100:.2f}%")
     print(f"Low Specialist (L2) Acc:    {accuracy_score(all_low_true, all_low_pred) * 100:.2f}%")
     print(f"High Specialist (L2) Acc:   {accuracy_score(all_high_true, all_high_pred) * 100:.2f}%")
 
     print("\n" + "=" * 50)
-    print("🌍 TRUE HIERARCHICAL PIPELINE PERFORMANCE 🌍")
+    print("TRUE HIERARCHICAL PIPELINE PERFORMANCE")
     print("=" * 50)
 
     global_acc = accuracy_score(all_y_true, all_pipeline_preds) * 100
-    print(f"🏆 GLOBAL PIPELINE ACCURACY: {global_acc:.2f}% 🏆\n")
+    print(f"GLOBAL PIPELINE ACCURACY: {global_acc:.2f}%\n")
 
     ordered_classes = [0, 3, 4, 1, 2, 5, 6]
     display_labels = [EMOTION_DECODER[cls] for cls in ordered_classes]
@@ -186,7 +186,7 @@ def main():
         error_df = pd.DataFrame(error_log)
         csv_path = "pipeline_error_log.csv"
         error_df.to_csv(csv_path, index=False)
-        print(f"🚨 Saved {len(error_log)} misclassifications to '{csv_path}'. Inspect this file to find actor patterns!")
+        print(f" Saved {len(error_log)} misclassifications to '{csv_path}'. Inspect this file to find actor patterns!")
 
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=display_labels)
     fig, ax = plt.subplots(figsize=(10, 8))
