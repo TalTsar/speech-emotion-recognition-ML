@@ -37,4 +37,36 @@ All extracted features, alongside their ground-truth emotion labels, are saved a
 Train-Test split is done using a Subject-Stratified approach with 5-fold cross validation.
 
 ## Test
+
+--- Starting True Pipeline 5-Fold Cross-Validation ---
+Processing Fold 1...
+Processing Fold 2...
+Processing Fold 3...
+Processing Fold 4...
+Processing Fold 5...
+
+==================================================
+INDIVIDUAL MODEL PERFORMANCE (CV Average)
+==================================================
+Level 1 model Accuracy:   96.26%
+Level 2- Low Accuracy:    94.59%
+Level 2- High Accuracy:   80.19%
+
+==================================================
+TRUE HIERARCHICAL PIPELINE PERFORMANCE
+==================================================
+GLOBAL PIPELINE ACCURACY: 82.62%
+
+Emotion         | Sensitivity (Recall) | Specificity     | F1-Score  
+--------------------------------------------------------------------
+Anger           |              90.55% |         93.63% |   0.8582
+Anxiety/Fear    |              69.57% |         96.14% |   0.7111
+Happiness       |              63.38% |         95.69% |   0.6618
+Boredom         |              92.59% |         98.68% |   0.9259
+Disgust         |              69.57% |         98.98% |   0.7711
+Sadness         |              91.94% |         98.73% |   0.9120
+Neutral         |              88.61% |         97.37% |   0.8696
+--------------------------------------------------------------------
+MACRO AVERAGE F1 SCORE: 0.8157
+
 <img width="500" height="500" alt="true_pipeline_cm" src="https://github.com/user-attachments/assets/ed9d59b5-0fe5-41ba-a701-b5751f78b669" />
