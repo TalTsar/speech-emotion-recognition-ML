@@ -33,7 +33,7 @@ EMOTION_DECODER = {
 # 3. HIERARCHICAL MAPPINGS
 EXCITATION_MAPPING = {
     'L': 0, 'T': 0, 'N': 0,  # Low Excitation (Boredom, Sadness, Neutral)
-    'W': 1, 'A': 1, 'F': 1 ,'E': 1,         # High Excitation (Anger, Fear, Happiness)
+    'W': 1, 'A': 1, 'F': 1 ,'E': 1,         # High Excitation (Anger, Fear, Happiness, Disgust)
 }
 
 # Neural network targets must start at 0
