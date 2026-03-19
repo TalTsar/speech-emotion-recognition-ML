@@ -26,8 +26,6 @@ def main():
     y_target = np.load(os.path.join(config.FEATURE_SAVE_PATH, "y_target_all.npy"))
     y_actor = np.load(os.path.join(config.FEATURE_SAVE_PATH, "y_actor.npy"))
 
-    # 🚨 REMOVED the global np.hstack here! We do it inside the fold now. 🚨
-
     k = 5
     gkf = GroupKFold(n_splits=k)
 
