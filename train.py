@@ -54,7 +54,7 @@ def main():
         # ==========================================
         # STEP 2: TRAIN THE MODELS (Safe PCA & Fusion)
         # ==========================================
-        # A. Gatekeeper (L1) - Uses ONLY Acoustic Features
+        # A. L1 - Uses ONLY Acoustic Features
         scaler_L1 = StandardScaler()
         X_mfcc_train_scaled = scaler_L1.fit_transform(X_mfcc_train)
         gatekeeper = SVC(kernel='rbf', C=10, gamma='scale')
@@ -68,14 +68,14 @@ def main():
         # New feature vector size: 100 dense dimensions
         X_combined_train = np.hstack((X_mfcc_train_scaled, X_emb_train_pca))
 
-        # B. Low Specialist (L2)
+        # B. L2 - Low
         low_mask_train = (y_exc_train == 0)
         scaler_L2_low = StandardScaler()
         X_low_train_scaled = scaler_L2_low.fit_transform(X_combined_train[low_mask_train])
         low_specialist = SVC(kernel='rbf', C=10, gamma='scale', class_weight='balanced')
         low_specialist.fit(X_low_train_scaled, y_target_train[low_mask_train])
 
-        # C. High Specialist (L2)
+        # C. L2 - High
         high_mask_train = (y_exc_train == 1)
         scaler_L2_high = StandardScaler()
         X_high_train_scaled = scaler_L2_high.fit_transform(X_combined_train[high_mask_train])
@@ -85,14 +85,14 @@ def main():
         # ==========================================
         # STEP 3: PIPELINE INFERENCE
         # ==========================================
-        # 1. Scale test acoustics and route
+        # 1. Scale test acoustics
         X_mfcc_test_scaled = scaler_L1.transform(X_mfcc_test)
         pred_exc_routes = gatekeeper.predict(X_mfcc_test_scaled)
 
         # 2. Compress test embeddings using the trained PCA
         X_emb_test_pca = pca_emb.transform(X_emb_test)
 
-        # 3. Combine test features exactly like we did for training
+        # 3. Combine test features
         X_combined_test = np.hstack((X_mfcc_test_scaled, X_emb_test_pca))
 
         # Track Individual Performance
@@ -111,7 +111,6 @@ def main():
             all_high_pred.extend(high_specialist.predict(X_high_test_scaled))
             all_high_true.extend(y_target_test[high_mask_test])
 
-        # Actual Pipeline Routing
         fold_preds = []
         for i in range(len(test_idx)):
             sample_combined = X_combined_test[i].reshape(1, -1)
