@@ -1,8 +1,6 @@
 # speech-emotion-recognition-ML
 
-## Overview
-* develop hierarchical model using simple ML and feature embeddings
-* compare results with a simple NN of all 7 classes together
+**Overview:** develop hierarchical model using simple ML and feature embeddings.
 
 ### Dataset: EmoDb
 Downloaded from : https://www.kaggle.com/datasets/piyushagni5/berlin-database-of-emotional-speech-emodb
